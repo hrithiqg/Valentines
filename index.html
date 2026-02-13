@@ -3,150 +3,254 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For Annanya ❤️</title>
+  <title>For My Annanya ❤️</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
     :root {
-      --pink: #ff85a2;
-      --dark-pink: #ff4d7d;
-      --bg: #fff0f3;
+      --primary: #ff4d7d;
+      --secondary: #ff85a2;
+      --bg: #fce4ec;
+      --glass: rgba(255, 255, 255, 0.8);
     }
+
     body {
       margin: 0;
-      padding: 0;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background-color: var(--bg);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fce4ec 0%, #ffebee 100%);
+      font-family: 'Quicksand', sans-serif;
       overflow: hidden;
     }
-    .container {
-      text-align: center;
-      background: white;
-      padding: 2rem;
-      border-radius: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      z-index: 10;
-      max-width: 90%;
+
+    /* Floating Background Elements */
+    .bg-heart {
+      position: absolute;
+      color: var(--secondary);
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 1;
+      animation: floatUp 6s linear infinite;
     }
-    h1 { color: var(--dark-pink); font-size: 2rem; min-height: 3rem; }
-    .counter { font-size: 0.9rem; color: #777; margin-bottom: 1rem; }
-    .buttons { position: relative; height: 140px; margin-top: 20px; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(110vh) scale(0.5) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.5) rotate(360deg); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      padding: 3rem 2rem;
+      border-radius: 40px;
+      border: 2px solid white;
+      box-shadow: 0 20px 50px rgba(255, 77, 125, 0.15);
+      text-align: center;
+      width: 90%;
+      max-width: 450px;
+      transition: all 0.5s ease;
+    }
+
+    /* Polaroid Effect */
+    .photo-frame {
+      background: white;
+      padding: 10px 10px 30px 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transform: rotate(-3deg);
+      margin-bottom: 2rem;
+      transition: transform 0.3s;
+    }
+    .photo-frame:hover { transform: rotate(0deg) scale(1.05); }
+    .photo-frame img { width: 100%; border-radius: 5px; }
+
+    h1 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin: 1rem 0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .counter {
+      background: #ffecf1;
+      color: var(--primary);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      display: inline-block;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .btn-wrapper {
+      position: relative;
+      height: 150px; /* Space for button to run away */
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     button {
-      padding: 15px 30px;
-      font-size: 1.2rem;
+      padding: 15px 35px;
+      font-size: 1.1rem;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      transition: all 0.2s;
-      font-weight: bold;
+      font-weight: 700;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    #yesBtn { background: var(--dark-pink); color: white; position: relative; z-index: 5; }
-    #noBtn { background: #eee; color: #444; position: absolute; left: 50%; transform: translateX(-50%); }
-    .hidden { display: none; }
-    .floating-heart {
+
+    #yesBtn {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 5px 15px rgba(255, 77, 125, 0.4);
+      z-index: 100;
+    }
+
+    #noBtn {
+      background: white;
+      color: #999;
+      border: 1px solid #eee;
       position: absolute;
-      color: var(--pink);
-      opacity: 0.5;
-      user-select: none;
-      pointer-events: none;
-      animation: float 5s linear infinite;
+      white-space: nowrap;
     }
-    @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+
+    .hidden { display: none !important; }
+
+    #successMessage {
+      animation: heartBeat 1.5s infinite;
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <div id="mainContent">
-      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bm9qZ3p4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/K97l9W7JmO0Z6/giphy.gif" width="150" alt="Cute Bear">
-      <h1 id="headline">Annanya, will you be my Valentine?</h1>
-      <p class="counter">Almost 365 days of loving you...</p>
-      <div class="buttons" id="btnGroup">
-        <button id="yesBtn">YES! ❤️</button>
-        <button id="noBtn">No</button>
-      </div>
+
+  <div class="container" id="mainCard">
+    <div class="photo-frame">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bm9qZ3p4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/K97l9W7JmO0Z6/giphy.gif" alt="Us">
     </div>
+
+    <div class="counter" id="nickname">Annanya</div>
+    <h1 id="headline">Will you be my Valentine?</h1>
     
-    <div id="successMessage" class="hidden">
-      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bm9qZ3p4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/T86p6H9lS6X0c/giphy.gif" width="200">
-      <h1 id="finalMessage">I knew you'd say yes! 😉</h1>
-      <p>I love you so much, my favorite Muffin! See you on the 14th!</p>
+    <div class="btn-wrapper" id="btnGroup">
+      <button id="yesBtn">YES! ❤️</button>
+      <button id="noBtn">No</button>
     </div>
+  </div>
+
+  <div class="container hidden" id="successCard">
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bm9qZ3p4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/T86p6H9lS6X0c/giphy.gif" width="150">
+    <h1 id="finalMessage">I knew it! ❤️</h1>
+    <p style="color: #666;">I love you more than words can say, Muffin. See you on the 14th!</p>
   </div>
 
   <script>
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
+    const nickname = document.getElementById('nickname');
+    const mainCard = document.getElementById('mainCard');
+    const successCard = document.getElementById('successCard');
     const btnGroup = document.getElementById('btnGroup');
-    const headline = document.getElementById('headline');
-    
-    const names = ["Annanya", "Dudu", "Kiki", "Muffin"];
+
+    const names = ["Annanya", "Dudu", "Meli Kiki", "Mela Muffin"];
     const noTexts = [
       "Are you sure?", 
       "Really sure, Dudu?", 
-      "Think again, Meli Kiki!", 
-      "Last chance, Mela Muffin!", 
+      "Think again, Kiki!", 
+      "Last chance, Muffin!", 
       "You're breaking my heart!", 
       "Annanya pls", 
       "I'm gonna cry...", 
-      "Don't do this to me!"
+      "Wait! Click the other one!"
     ];
     
     let nameIndex = 0;
     let noCount = 0;
 
-    // Rotate names in the headline every 2 seconds
+    // Smoothly cycle nicknames
     setInterval(() => {
       nameIndex = (nameIndex + 1) % names.length;
-      headline.innerText = `${names[nameIndex]}, will you be my Valentine?`;
-    }, 2000);
+      nickname.style.opacity = 0;
+      setTimeout(() => {
+        nickname.innerText = names[nameIndex];
+        nickname.style.opacity = 1;
+      }, 300);
+    }, 2500);
 
-    // Move No Button & Grow Yes Button
-    noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * (btnGroup.offsetWidth - noBtn.offsetWidth);
-      const y = Math.random() * (btnGroup.offsetHeight - noBtn.offsetHeight);
+    // Escape Logic - Optimized for better boundaries
+    noBtn.addEventListener('mouseover', moveButton);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveButton();
+    });
+
+    function moveButton() {
+      const padding = 20;
+      const bWidth = noBtn.offsetWidth;
+      const bHeight = noBtn.offsetHeight;
+      const gWidth = btnGroup.offsetWidth;
+      const gHeight = btnGroup.offsetHeight;
+
+      // Calculate random position within the btn-wrapper
+      const newX = Math.random() * (gWidth - bWidth - padding);
+      const newY = Math.random() * (gHeight - bHeight - padding);
+
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
       
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-      noBtn.style.transform = 'none'; // Remove the initial centering
-      
-      // Update text and make Yes bigger
+      // Fun updates
       noBtn.innerText = noTexts[noCount % noTexts.length];
       noCount++;
-      
-      const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-      if (currentSize < 60) { // Limit growth so it doesn't break the layout
-        yesBtn.style.fontSize = `${currentSize + 4}px`;
-        yesBtn.style.padding = `${parseFloat(window.getComputedStyle(yesBtn).padding) + 2}px`;
+
+      // Make "Yes" grow more aggressively
+      const currentScale = yesBtn.style.transform ? parseFloat(yesBtn.style.transform.replace('scale(', '')) : 1;
+      if (currentScale < 1.8) {
+        yesBtn.style.transform = `scale(${currentScale + 0.1})`;
       }
-    });
+    }
 
     yesBtn.addEventListener('click', () => {
-      document.getElementById('mainContent').classList.add('hidden');
-      document.getElementById('successMessage').classList.remove('hidden');
+      mainCard.classList.add('hidden');
+      successCard.classList.remove('hidden');
       
-      // Final personal touch for the success heading
-      document.getElementById('finalMessage').innerText = `Yay! Love you, ${names[Math.floor(Math.random() * names.length)]}! ❤️`;
-      
-      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      // Ultimate Confetti
+      const duration = 5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+      function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
+        const particleCount = 50 * (timeLeft / duration);
+        confetti({...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+        confetti({...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+      }, 250);
     });
 
-    // Background Hearts
+    // Create more beautiful floating hearts
     function createHeart() {
       const heart = document.createElement('div');
-      heart.classList.add('floating-heart');
+      heart.classList.add('bg-heart');
       heart.innerHTML = '❤️';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+      heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+      setTimeout(() => heart.remove(), 6000);
     }
-    setInterval(createHeart, 300);
+    setInterval(createHeart, 400);
   </script>
 </body>
 </html>
