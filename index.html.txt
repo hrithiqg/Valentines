@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Nirali ❤️</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --pink: #ff85a2;
+      --dark-pink: #ff4d7d;
+      --bg: #fff0f3;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: var(--bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      background: white;
+      padding: 2rem;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      z-index: 10;
+      max-width: 90%;
+    }
+    h1 { color: var(--dark-pink); font-size: 2rem; }
+    .counter { font-size: 0.9rem; color: #777; margin-bottom: 1rem; }
+    .buttons { position: relative; height: 120px; margin-top: 20px; }
+    button {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: bold;
+    }
+    #yesBtn { background: var(--dark-pink); color: white; position: relative; z-index: 5; }
+    #noBtn { background: #eee; color: #444; position: absolute; left: 50%; }
+    .hidden { display: none; }
+    .floating-heart {
+      position: absolute;
+      color: var(--pink);
+      opacity: 0.5;
+      user-select: none;
+      pointer-events: none;
+      animation: float 5s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="mainContent">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bm9qZ3p4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/K97l9W7JmO0Z6/giphy.gif" width="150" alt="Cute Bear">
+      <h1>Nirali, will you be my Valentine?</h1>
+      <p class="counter">Almost 365 days of loving you...</p>
+      <div class="buttons" id="btnGroup">
+        <button id="yesBtn">YES! ❤️</button>
+        <button id="noBtn">No</button>
+      </div>
+    </div>
+    
+    <div id="successMessage" class="hidden">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bm9qZ3p4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/T86p6H9lS6X0c/giphy.gif" width="200">
+      <h1>I knew you'd say yes! 😉</h1>
+      <p>I love you so much! See you on the 14th!</p>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const btnGroup = document.getElementById('btnGroup');
+    const noTexts = ["Are you sure?", "Really sure??", "Think again!", "Last chance!", "You're breaking my heart!", "Nirali pls", "I'm gonna cry...", "Click Yes!"];
+    let noCount = 0;
+
+    // Move No Button & Grow Yes Button
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * (btnGroup.offsetWidth - noBtn.offsetWidth);
+      const y = Math.random() * (btnGroup.offsetHeight - noBtn.offsetHeight);
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+      
+      // Update text and make Yes bigger
+      noBtn.innerText = noTexts[noCount % noTexts.length];
+      noCount++;
+      const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+      yesBtn.style.fontSize = `${currentSize + 5}px`;
+      yesBtn.style.padding = `${parseFloat(window.getComputedStyle(yesBtn).padding) + 2}px`;
+    });
+
+    yesBtn.addEventListener('click', () => {
+      document.getElementById('mainContent').classList.add('hidden');
+      document.getElementById('successMessage').classList.remove('hidden');
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+    });
+
+    // Background Hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+    setInterval(createHeart, 300);
+  </script>
+</body>
+</html>
